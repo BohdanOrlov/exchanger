@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  BORCurrencyViewController.h
 //  CurrencyExchanger
 //
 //  Created by Bohdan Orlov on 23/09/2017.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface BORCurrencyViewController : UIViewController
 
 @end
-

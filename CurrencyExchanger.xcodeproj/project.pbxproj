@@ -8,12 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		D2481C541F76CF3400F0E0D9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D2481C531F76CF3400F0E0D9 /* main.m */; };
-		D2481C571F76CF3400F0E0D9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D2481C561F76CF3400F0E0D9 /* AppDelegate.m */; };
-		D2481C5A1F76CF3400F0E0D9 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2481C591F76CF3400F0E0D9 /* ViewController.m */; };
+		D2481C571F76CF3400F0E0D9 /* BORAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D2481C561F76CF3400F0E0D9 /* BORAppDelegate.m */; };
+		D2481C5A1F76CF3400F0E0D9 /* BORExchangeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2481C591F76CF3400F0E0D9 /* BORExchangeViewController.m */; };
 		D2481C5D1F76CF3400F0E0D9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D2481C5B1F76CF3400F0E0D9 /* Main.storyboard */; };
 		D2481C5F1F76CF3400F0E0D9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D2481C5E1F76CF3400F0E0D9 /* Assets.xcassets */; };
 		D2481C621F76CF3400F0E0D9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D2481C601F76CF3400F0E0D9 /* LaunchScreen.storyboard */; };
 		D2481C6D1F76CF3500F0E0D9 /* CurrencyExchangerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D2481C6C1F76CF3500F0E0D9 /* CurrencyExchangerTests.m */; };
+		D2481C7A1F76D35100F0E0D9 /* BORCarouselViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2481C791F76D35100F0E0D9 /* BORCarouselViewController.m */; };
+		D2481C801F76DFF600F0E0D9 /* BORCurrencyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2481C7F1F76DFF600F0E0D9 /* BORCurrencyViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,10 +31,10 @@
 /* Begin PBXFileReference section */
 		D2481C4F1F76CF3400F0E0D9 /* CurrencyExchanger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CurrencyExchanger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2481C531F76CF3400F0E0D9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		D2481C551F76CF3400F0E0D9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		D2481C561F76CF3400F0E0D9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		D2481C581F76CF3400F0E0D9 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		D2481C591F76CF3400F0E0D9 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		D2481C551F76CF3400F0E0D9 /* BORAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BORAppDelegate.h; sourceTree = "<group>"; };
+		D2481C561F76CF3400F0E0D9 /* BORAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BORAppDelegate.m; sourceTree = "<group>"; };
+		D2481C581F76CF3400F0E0D9 /* BORExchangeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BORExchangeViewController.h; sourceTree = "<group>"; };
+		D2481C591F76CF3400F0E0D9 /* BORExchangeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BORExchangeViewController.m; sourceTree = "<group>"; };
 		D2481C5C1F76CF3400F0E0D9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D2481C5E1F76CF3400F0E0D9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D2481C611F76CF3400F0E0D9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -40,6 +42,10 @@
 		D2481C681F76CF3500F0E0D9 /* CurrencyExchangerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CurrencyExchangerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2481C6C1F76CF3500F0E0D9 /* CurrencyExchangerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CurrencyExchangerTests.m; sourceTree = "<group>"; };
 		D2481C6E1F76CF3500F0E0D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D2481C781F76D35100F0E0D9 /* BORCarouselViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BORCarouselViewController.h; sourceTree = "<group>"; };
+		D2481C791F76D35100F0E0D9 /* BORCarouselViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BORCarouselViewController.m; sourceTree = "<group>"; };
+		D2481C7E1F76DFF600F0E0D9 /* BORCurrencyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BORCurrencyViewController.h; sourceTree = "<group>"; };
+		D2481C7F1F76DFF600F0E0D9 /* BORCurrencyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BORCurrencyViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,10 +87,9 @@
 		D2481C511F76CF3400F0E0D9 /* CurrencyExchanger */ = {
 			isa = PBXGroup;
 			children = (
-				D2481C551F76CF3400F0E0D9 /* AppDelegate.h */,
-				D2481C561F76CF3400F0E0D9 /* AppDelegate.m */,
-				D2481C581F76CF3400F0E0D9 /* ViewController.h */,
-				D2481C591F76CF3400F0E0D9 /* ViewController.m */,
+				D2481C551F76CF3400F0E0D9 /* BORAppDelegate.h */,
+				D2481C561F76CF3400F0E0D9 /* BORAppDelegate.m */,
+				D2481C771F76D2C700F0E0D9 /* UI */,
 				D2481C5B1F76CF3400F0E0D9 /* Main.storyboard */,
 				D2481C5E1F76CF3400F0E0D9 /* Assets.xcassets */,
 				D2481C601F76CF3400F0E0D9 /* LaunchScreen.storyboard */,
@@ -109,6 +114,43 @@
 				D2481C6E1F76CF3500F0E0D9 /* Info.plist */,
 			);
 			path = CurrencyExchangerTests;
+			sourceTree = "<group>";
+		};
+		D2481C771F76D2C700F0E0D9 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				D2481C7B1F76D3AE00F0E0D9 /* Exchange screen */,
+				D2481C7C1F76D3C000F0E0D9 /* Carousel view */,
+				D2481C7D1F76DF9E00F0E0D9 /* Currency view */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		D2481C7B1F76D3AE00F0E0D9 /* Exchange screen */ = {
+			isa = PBXGroup;
+			children = (
+				D2481C581F76CF3400F0E0D9 /* BORExchangeViewController.h */,
+				D2481C591F76CF3400F0E0D9 /* BORExchangeViewController.m */,
+			);
+			name = "Exchange screen";
+			sourceTree = "<group>";
+		};
+		D2481C7C1F76D3C000F0E0D9 /* Carousel view */ = {
+			isa = PBXGroup;
+			children = (
+				D2481C781F76D35100F0E0D9 /* BORCarouselViewController.h */,
+				D2481C791F76D35100F0E0D9 /* BORCarouselViewController.m */,
+			);
+			name = "Carousel view";
+			sourceTree = "<group>";
+		};
+		D2481C7D1F76DF9E00F0E0D9 /* Currency view */ = {
+			isa = PBXGroup;
+			children = (
+				D2481C7E1F76DFF600F0E0D9 /* BORCurrencyViewController.h */,
+				D2481C7F1F76DFF600F0E0D9 /* BORCurrencyViewController.m */,
+			);
+			name = "Currency view";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -155,6 +197,7 @@
 		D2481C471F76CF3400F0E0D9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = BOR;
 				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = "Bohdan Orlov";
 				TargetAttributes = {
@@ -213,8 +256,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D2481C5A1F76CF3400F0E0D9 /* ViewController.m in Sources */,
-				D2481C571F76CF3400F0E0D9 /* AppDelegate.m in Sources */,
+				D2481C5A1F76CF3400F0E0D9 /* BORExchangeViewController.m in Sources */,
+				D2481C571F76CF3400F0E0D9 /* BORAppDelegate.m in Sources */,
+				D2481C7A1F76D35100F0E0D9 /* BORCarouselViewController.m in Sources */,
+				D2481C801F76DFF600F0E0D9 /* BORCurrencyViewController.m in Sources */,
 				D2481C541F76CF3400F0E0D9 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
