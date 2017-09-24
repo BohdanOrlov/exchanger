@@ -9,29 +9,41 @@
 #import "BORCurrencyViewController.h"
 
 @interface BORCurrencyViewController ()
+@property (strong, nonatomic) IBOutlet UILabel *currencyLabel;
+@property (strong, nonatomic) IBOutlet UILabel *balanceLabel;
+@property (strong, nonatomic) IBOutlet UITextField *differenceTextfield;
+
 
 @end
 
 @implementation BORCurrencyViewController
 
+@synthesize data = _data;
+
++ (instancetype)controller {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    BORCurrencyViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"currencyViewController"];
+    return controller;
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    [self updateWithData:self.data];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)setData:(BORCurrencyViewData *)data {
+    _data = data;
+    [self updateWithData:data];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)updateWithData:(BORCurrencyViewData *)data {
+    if (!self.isViewLoaded) {
+        return;
+    }
+    self.currencyLabel.text = data.currency;
+    self.balanceLabel.text = data.balance;
+    self.differenceTextfield.text = [@(data.difference) stringValue];
 }
-*/
 
 @end

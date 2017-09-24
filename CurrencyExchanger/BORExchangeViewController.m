@@ -3,6 +3,7 @@
 
 #import "BORExchangeViewController.h"
 #import "BORCarouselViewController.h"
+#import "BORExchangeScreenCoordinator.h"
 
 @interface BORExchangeViewController ()
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *keyboardSpacingConstraint;
@@ -15,8 +16,23 @@
 
 @implementation BORExchangeViewController
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    __weak typeof(self) wSelf = self;
+    self.topCurrencyViewController.didSelectPrevView = ^() {
+        [wSelf.actionsHandler selectPrevFromCurrency];
+    };
+    self.topCurrencyViewController.didSelectNextView = ^() {
+        [wSelf.actionsHandler selectNextFromCurrency];
+    };
+    self.bottomCurrencyViewController.didSelectPrevView = ^() {
+        [wSelf.actionsHandler selectPrevToCurrency];
+    };
+    self.bottomCurrencyViewController.didSelectNextView = ^() {
+        [wSelf.actionsHandler selectNextToCurrency];
+    };
+    [self updateWithData:self.dataProvider.data];
     self.topCurrencyViewController.view.backgroundColor = [UIColor whiteColor];
     self.bottomCurrencyViewController.view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.05];
     self.exchangeRateContainerView.layer.borderColor = self.bottomCurrencyViewController.view.backgroundColor.CGColor;
@@ -28,8 +44,26 @@
     self.exchangeButton.layer.borderColor = self.exchangeButton.tintColor.CGColor;
 }
 
-- (IBAction)didTapExchangeButton:(id)sender {
+- (void)updateWithData:(BORExchangeScreenData *)data {
+    if (!self.isViewLoaded) {
+        return;
+    }
+    self.topCurrencyViewController.data = data.fromCurrencyData;
+    self.bottomCurrencyViewController.data = data.toCurrencyData;
+    self.exchangeRateLabel.text = data.exchangeRate;
+}
 
+- (void)setDataProvider:(id<BORExchangeScreenDataProviding>)dataProvider {
+    _dataProvider = dataProvider;
+    [self updateWithData: dataProvider.data];
+    __weak typeof(self) wSelf = self;
+    _dataProvider.screenDataDidChange = ^(BORExchangeScreenData * _Nonnull data) {
+        [wSelf updateWithData: data];
+    };
+}
+
+- (IBAction)didTapExchangeButton:(id)sender {
+    [self.actionsHandler exchange];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

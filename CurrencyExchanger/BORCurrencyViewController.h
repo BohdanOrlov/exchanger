@@ -7,7 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BORCurrencyViewData.h"
 
-@interface BORCurrencyViewController : UIViewController
+NS_ASSUME_NONNULL_BEGIN
+
+
+@protocol BORCurrencyView <NSObject>
 
 @end
+
+@interface BORCurrencyViewController : UIViewController <BORCurrencyView>
+
+@property (strong, nonatomic) BORCurrencyViewData *data;
+
++ (instancetype)controller;
+
+@end
+
+NS_ASSUME_NONNULL_END

@@ -138,11 +138,7 @@
         <!--Page View Controller-->
         <scene sceneID="404-y3-C05">
             <objects>
-                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" pageSpacing="2" navigationOrientation="horizontal" spineLocation="none" id="brV-TS-HkI" sceneMemberID="viewController">
-                    <connections>
-                        <segue destination="Rxo-I8-OoN" kind="custom" identifier="Only for ilustration purposes, instantiated by VC identifier" id="Wf3-BI-ony"/>
-                    </connections>
-                </pageViewController>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" pageSpacing="2" navigationOrientation="horizontal" spineLocation="none" id="brV-TS-HkI" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QH3-iS-ULs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="854" y="222"/>
@@ -155,7 +151,7 @@
                         <viewControllerLayoutGuide type="top" id="Lsn-ri-3Iw"/>
                         <viewControllerLayoutGuide type="bottom" id="ugZ-pB-Uk8"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Hgf-bA-TDx" userLabel="View" customClass="BORcurr">
+                    <view key="view" contentMode="scaleToFill" id="Hgf-bA-TDx" userLabel="View">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="211.5"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -173,18 +169,23 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="exchange Difference" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OTQ-tu-MBg">
-                                <rect key="frame" x="198" y="95" width="161" height="21"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RZa-yX-lPO">
+                                <rect key="frame" x="231" y="115" width="128" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="211.5"/>
+                    <connections>
+                        <outlet property="balanceLabel" destination="Em7-4S-oVX" id="gtd-NT-Ltw"/>
+                        <outlet property="currencyLabel" destination="s6x-Xd-O7Y" id="AMR-ub-TtG"/>
+                        <outlet property="differenceTextfield" destination="RZa-yX-lPO" id="0n7-Os-VW2"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wFW-CF-lMa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

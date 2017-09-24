@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D242034F1F77083F009E255E /* BORCurrencyViewData.m in Sources */ = {isa = PBXBuildFile; fileRef = D242034E1F77083F009E255E /* BORCurrencyViewData.m */; };
+		D24203521F770E36009E255E /* BORCarouselViewData.m in Sources */ = {isa = PBXBuildFile; fileRef = D24203511F770E36009E255E /* BORCarouselViewData.m */; };
+		D24203551F7710C0009E255E /* BORExchangeScreenData.m in Sources */ = {isa = PBXBuildFile; fileRef = D24203541F7710C0009E255E /* BORExchangeScreenData.m */; };
+		D24203591F7714E2009E255E /* BORExchangeScreenCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = D24203581F7714E2009E255E /* BORExchangeScreenCoordinator.m */; };
+		D242035D1F771E3D009E255E /* BORCurrency.m in Sources */ = {isa = PBXBuildFile; fileRef = D242035C1F771E3D009E255E /* BORCurrency.m */; };
+		D24203601F771F89009E255E /* BORExchangeRate.m in Sources */ = {isa = PBXBuildFile; fileRef = D242035F1F771F89009E255E /* BORExchangeRate.m */; };
+		D24203631F77B89F009E255E /* BORBalanceStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = D24203621F77B89F009E255E /* BORBalanceStorage.m */; };
+		D24203661F77B9DD009E255E /* BORBalance.m in Sources */ = {isa = PBXBuildFile; fileRef = D24203651F77B9DD009E255E /* BORBalance.m */; };
 		D2481C541F76CF3400F0E0D9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D2481C531F76CF3400F0E0D9 /* main.m */; };
 		D2481C571F76CF3400F0E0D9 /* BORAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D2481C561F76CF3400F0E0D9 /* BORAppDelegate.m */; };
 		D2481C5A1F76CF3400F0E0D9 /* BORExchangeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2481C591F76CF3400F0E0D9 /* BORExchangeViewController.m */; };
@@ -16,6 +24,7 @@
 		D2481C6D1F76CF3500F0E0D9 /* CurrencyExchangerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D2481C6C1F76CF3500F0E0D9 /* CurrencyExchangerTests.m */; };
 		D2481C7A1F76D35100F0E0D9 /* BORCarouselViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2481C791F76D35100F0E0D9 /* BORCarouselViewController.m */; };
 		D2481C801F76DFF600F0E0D9 /* BORCurrencyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2481C7F1F76DFF600F0E0D9 /* BORCurrencyViewController.m */; };
+		D2C216441F780C6F004AA9F0 /* BORExchangeRateProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = D2C216431F780C6F004AA9F0 /* BORExchangeRateProvider.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +38,22 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D242034D1F77083F009E255E /* BORCurrencyViewData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BORCurrencyViewData.h; sourceTree = "<group>"; };
+		D242034E1F77083F009E255E /* BORCurrencyViewData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BORCurrencyViewData.m; sourceTree = "<group>"; };
+		D24203501F770E36009E255E /* BORCarouselViewData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BORCarouselViewData.h; sourceTree = "<group>"; };
+		D24203511F770E36009E255E /* BORCarouselViewData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BORCarouselViewData.m; sourceTree = "<group>"; };
+		D24203531F7710C0009E255E /* BORExchangeScreenData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BORExchangeScreenData.h; sourceTree = "<group>"; };
+		D24203541F7710C0009E255E /* BORExchangeScreenData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BORExchangeScreenData.m; sourceTree = "<group>"; };
+		D24203571F7714E2009E255E /* BORExchangeScreenCoordinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BORExchangeScreenCoordinator.h; sourceTree = "<group>"; };
+		D24203581F7714E2009E255E /* BORExchangeScreenCoordinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BORExchangeScreenCoordinator.m; sourceTree = "<group>"; };
+		D242035B1F771E3D009E255E /* BORCurrency.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BORCurrency.h; sourceTree = "<group>"; };
+		D242035C1F771E3D009E255E /* BORCurrency.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BORCurrency.m; sourceTree = "<group>"; };
+		D242035E1F771F89009E255E /* BORExchangeRate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BORExchangeRate.h; sourceTree = "<group>"; };
+		D242035F1F771F89009E255E /* BORExchangeRate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BORExchangeRate.m; sourceTree = "<group>"; };
+		D24203611F77B89F009E255E /* BORBalanceStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BORBalanceStorage.h; sourceTree = "<group>"; };
+		D24203621F77B89F009E255E /* BORBalanceStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BORBalanceStorage.m; sourceTree = "<group>"; };
+		D24203641F77B9DD009E255E /* BORBalance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BORBalance.h; sourceTree = "<group>"; };
+		D24203651F77B9DD009E255E /* BORBalance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BORBalance.m; sourceTree = "<group>"; };
 		D2481C4F1F76CF3400F0E0D9 /* CurrencyExchanger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CurrencyExchanger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2481C531F76CF3400F0E0D9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D2481C551F76CF3400F0E0D9 /* BORAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BORAppDelegate.h; sourceTree = "<group>"; };
@@ -46,6 +71,8 @@
 		D2481C791F76D35100F0E0D9 /* BORCarouselViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BORCarouselViewController.m; sourceTree = "<group>"; };
 		D2481C7E1F76DFF600F0E0D9 /* BORCurrencyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BORCurrencyViewController.h; sourceTree = "<group>"; };
 		D2481C7F1F76DFF600F0E0D9 /* BORCurrencyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BORCurrencyViewController.m; sourceTree = "<group>"; };
+		D2C216421F780C6F004AA9F0 /* BORExchangeRateProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BORExchangeRateProvider.h; sourceTree = "<group>"; };
+		D2C216431F780C6F004AA9F0 /* BORExchangeRateProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BORExchangeRateProvider.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +93,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D24203561F77149C009E255E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D24203611F77B89F009E255E /* BORBalanceStorage.h */,
+				D24203621F77B89F009E255E /* BORBalanceStorage.m */,
+				D2C216421F780C6F004AA9F0 /* BORExchangeRateProvider.h */,
+				D2C216431F780C6F004AA9F0 /* BORExchangeRateProvider.m */,
+				D24203571F7714E2009E255E /* BORExchangeScreenCoordinator.h */,
+				D24203581F7714E2009E255E /* BORExchangeScreenCoordinator.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		D242035A1F771E00009E255E /* Domain entities */ = {
+			isa = PBXGroup;
+			children = (
+				D242035B1F771E3D009E255E /* BORCurrency.h */,
+				D242035C1F771E3D009E255E /* BORCurrency.m */,
+				D24203641F77B9DD009E255E /* BORBalance.h */,
+				D24203651F77B9DD009E255E /* BORBalance.m */,
+				D242035E1F771F89009E255E /* BORExchangeRate.h */,
+				D242035F1F771F89009E255E /* BORExchangeRate.m */,
+			);
+			name = "Domain entities";
+			sourceTree = "<group>";
+		};
 		D2481C461F76CF3400F0E0D9 = {
 			isa = PBXGroup;
 			children = (
@@ -87,9 +140,11 @@
 		D2481C511F76CF3400F0E0D9 /* CurrencyExchanger */ = {
 			isa = PBXGroup;
 			children = (
+				D242035A1F771E00009E255E /* Domain entities */,
+				D24203561F77149C009E255E /* Models */,
+				D2481C771F76D2C700F0E0D9 /* UI */,
 				D2481C551F76CF3400F0E0D9 /* BORAppDelegate.h */,
 				D2481C561F76CF3400F0E0D9 /* BORAppDelegate.m */,
-				D2481C771F76D2C700F0E0D9 /* UI */,
 				D2481C5B1F76CF3400F0E0D9 /* Main.storyboard */,
 				D2481C5E1F76CF3400F0E0D9 /* Assets.xcassets */,
 				D2481C601F76CF3400F0E0D9 /* LaunchScreen.storyboard */,
@@ -129,6 +184,8 @@
 		D2481C7B1F76D3AE00F0E0D9 /* Exchange screen */ = {
 			isa = PBXGroup;
 			children = (
+				D24203531F7710C0009E255E /* BORExchangeScreenData.h */,
+				D24203541F7710C0009E255E /* BORExchangeScreenData.m */,
 				D2481C581F76CF3400F0E0D9 /* BORExchangeViewController.h */,
 				D2481C591F76CF3400F0E0D9 /* BORExchangeViewController.m */,
 			);
@@ -138,6 +195,8 @@
 		D2481C7C1F76D3C000F0E0D9 /* Carousel view */ = {
 			isa = PBXGroup;
 			children = (
+				D24203501F770E36009E255E /* BORCarouselViewData.h */,
+				D24203511F770E36009E255E /* BORCarouselViewData.m */,
 				D2481C781F76D35100F0E0D9 /* BORCarouselViewController.h */,
 				D2481C791F76D35100F0E0D9 /* BORCarouselViewController.m */,
 			);
@@ -147,6 +206,8 @@
 		D2481C7D1F76DF9E00F0E0D9 /* Currency view */ = {
 			isa = PBXGroup;
 			children = (
+				D242034D1F77083F009E255E /* BORCurrencyViewData.h */,
+				D242034E1F77083F009E255E /* BORCurrencyViewData.m */,
 				D2481C7E1F76DFF600F0E0D9 /* BORCurrencyViewController.h */,
 				D2481C7F1F76DFF600F0E0D9 /* BORCurrencyViewController.m */,
 			);
@@ -256,11 +317,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D24203591F7714E2009E255E /* BORExchangeScreenCoordinator.m in Sources */,
+				D24203521F770E36009E255E /* BORCarouselViewData.m in Sources */,
 				D2481C5A1F76CF3400F0E0D9 /* BORExchangeViewController.m in Sources */,
 				D2481C571F76CF3400F0E0D9 /* BORAppDelegate.m in Sources */,
+				D24203551F7710C0009E255E /* BORExchangeScreenData.m in Sources */,
 				D2481C7A1F76D35100F0E0D9 /* BORCarouselViewController.m in Sources */,
+				D242035D1F771E3D009E255E /* BORCurrency.m in Sources */,
+				D242034F1F77083F009E255E /* BORCurrencyViewData.m in Sources */,
 				D2481C801F76DFF600F0E0D9 /* BORCurrencyViewController.m in Sources */,
 				D2481C541F76CF3400F0E0D9 /* main.m in Sources */,
+				D24203631F77B89F009E255E /* BORBalanceStorage.m in Sources */,
+				D2C216441F780C6F004AA9F0 /* BORExchangeRateProvider.m in Sources */,
+				D24203601F771F89009E255E /* BORExchangeRate.m in Sources */,
+				D24203661F77B9DD009E255E /* BORBalance.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -337,6 +407,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -380,6 +451,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -459,6 +531,7 @@
 				D2481C731F76CF3500F0E0D9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D2481C741F76CF3500F0E0D9 /* Build configuration list for PBXNativeTarget "CurrencyExchangerTests" */ = {
 			isa = XCConfigurationList;
@@ -467,6 +540,7 @@
 				D2481C761F76CF3500F0E0D9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
