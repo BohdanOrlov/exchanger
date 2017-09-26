@@ -11,8 +11,7 @@
 @interface BORCurrencyViewController ()
 @property (strong, nonatomic) IBOutlet UILabel *currencyLabel;
 @property (strong, nonatomic) IBOutlet UILabel *balanceLabel;
-@property (strong, nonatomic) IBOutlet UITextField *differenceTextfield;
-
+@property (strong, nonatomic) IBOutlet UILabel *exchangeAmountLabel;
 
 @end
 
@@ -25,7 +24,6 @@
     BORCurrencyViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"currencyViewController"];
     return controller;
 }
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -43,7 +41,8 @@
     }
     self.currencyLabel.text = data.currency;
     self.balanceLabel.text = data.balance;
-    self.differenceTextfield.text = [@(data.difference) stringValue];
+    self.exchangeAmountLabel.text = data.exchangeAmount;
+    self.balanceLabel.textColor = data.balanceHighlighted ? [UIColor redColor] : [UIColor blackColor];
 }
 
 @end

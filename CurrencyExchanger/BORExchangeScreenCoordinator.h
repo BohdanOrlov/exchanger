@@ -13,7 +13,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @class BORCurrencyViewData;
-@protocol BORBalanceProviding;
+@protocol BORBalanceStoring;
 
 @protocol BORExchangeScreenDataProviding <NSObject>
 
@@ -31,6 +31,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)selectNextToCurrency;
 - (void)selectPrevToCurrency;
 
+- (void)setFromCurrencyAmount:(double)amount;
+- (void)setToCurrencyAmount:(double)amount;
+
 - (void)exchange;
 
 @end
@@ -38,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface BORExchangeScreenCoordinator : NSObject <BORExchangeScreenDataProviding, BORExchangeScreenActionHandling>
 
 
-+ (instancetype)coordinatorWithBalanceProvider:(id<BORBalanceProviding>)balanceProvider;
++ (instancetype)coordinatorWithBalanceProvider:(id<BORBalanceStoring>)balanceProvider;
 
 
 @end

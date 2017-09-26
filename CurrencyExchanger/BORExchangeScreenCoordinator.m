@@ -16,10 +16,12 @@
 
 @interface BORExchangeScreenCoordinator ()
 
-@property (strong, nonatomic) id <BORBalanceProviding> balanceProvider;
+@property (strong, nonatomic) id <BORBalanceStoring> balanceProvider;
 @property (strong, nonatomic) id <BORExchangeRateProviding> exchangeRateProvider;
-@property (strong, nonatomic) BORBalance *selectedFromBalance;
-@property (strong, nonatomic) BORBalance *selectedToBalance;
+@property (assign, nonatomic) NSInteger selectedFromBalanceIndex;
+@property (assign, nonatomic) NSInteger selectedToBalanceIndex;
+@property (assign, nonatomic) double fromAmmount;
+@property (assign, nonatomic) double toAmmount;
 
 @end
 
@@ -28,30 +30,57 @@
 @synthesize screenDataDidChange = _screenDataDidChange;
 
 
-+ (instancetype)coordinatorWithBalanceProvider:(id <BORBalanceProviding>)balanceProvider {
++ (instancetype)coordinatorWithBalanceProvider:(id <BORBalanceStoring>)balanceProvider {
     BORExchangeScreenCoordinator *coordinator = [[self alloc] init];
     coordinator.balanceProvider = balanceProvider;
-    coordinator.selectedFromBalance = balanceProvider.balances.firstObject;
-    if (balanceProvider.balances.count > 1) {
-        coordinator.selectedToBalance = balanceProvider.balances[1];
-    } else {
-        coordinator.selectedToBalance = coordinator.selectedFromBalance;
-    }
-    coordinator.exchangeRateProvider = [BORExchangeRateProvider new];  // TODO
-    __weak typeof(coordinator) weakCoordinator = coordinator;
-    [coordinator.exchangeRateProvider exchangeRatesWithCompletion:^() {
-        [weakCoordinator invalidateData];
-    }];
+    coordinator.exchangeRateProvider = [BORExchangeRateProvider providerWithUpdateInterval:30];
     return coordinator;
 }
 
-- (void)setSelectedFromBalance:(BORBalance *)selectedFromBalance {
-    _selectedFromBalance = selectedFromBalance;
+- (void)setBalanceProvider:(id<BORBalanceStoring>)balanceProvider {
+    _balanceProvider = balanceProvider;
+    _selectedFromBalanceIndex = 0;
+    _selectedToBalanceIndex = balanceProvider.balances.count > 1 ? 1 : 0;
+    __weak typeof(self) wSelf = self;
+    balanceProvider.balancesDidChange = ^{
+        [wSelf invalidateData];
+    };
+}
+
+- (void)setExchangeRateProvider:(id<BORExchangeRateProviding>)exchangeRateProvider {
+    _exchangeRateProvider = exchangeRateProvider;
+    [exchangeRateProvider startUpdatingExchangeRates];
+    __weak typeof(self) wSelf = self;
+    exchangeRateProvider.ratesDidChange = ^{
+        [wSelf invalidateData];
+    };
+}
+
+- (void)setSelectedFromBalanceIndex:(NSInteger)selectedFromBalanceIndex {
+    _selectedFromBalanceIndex = selectedFromBalanceIndex;
+    [self invalidateData];
+    if (_selectedFromBalanceIndex == _selectedToBalanceIndex) {
+        [self selectNextToCurrency];
+    }
+}
+
+- (void)setSelectedToBalanceIndex:(NSInteger)selectedToBalanceIndex {
+    _selectedToBalanceIndex = selectedToBalanceIndex;
+    [self invalidateData];
+    if (_selectedToBalanceIndex == _selectedFromBalanceIndex) {
+        [self selectNextFromCurrency];
+    }
+}
+
+- (void)setFromCurrencyAmount:(double)amount {
+    self.fromAmmount = amount;
+    self.toAmmount = [self currentExchangeRate].ratio * amount;
     [self invalidateData];
 }
 
-- (void)setSelectedToBalance:(BORBalance *)selectedToBalance {
-    _selectedToBalance = selectedToBalance;
+- (void)setToCurrencyAmount:(double)amount {
+    self.toAmmount = amount;
+    self.fromAmmount = amount * (1 / [self currentExchangeRate].ratio);
     [self invalidateData];
 }
 
@@ -66,7 +95,8 @@
     if (!_data) {
         _data = [BORExchangeScreenData dataWithFromCurrency:[self fromCurrencyCarouselData]
                                              toCurrencyData:[self toCurrencyCarouselData]
-                                               exchangeRate:[self currentExchangeRate]];
+                                               exchangeRate:[self currentExchangeRateString]
+                                      exchangeButtonEnabled:[self exchangeButtonEnabled]];
     }
     return _data;
 }
@@ -80,7 +110,7 @@
     NSMutableOrderedSet *set = [NSMutableOrderedSet orderedSet];
     BORCurrencyViewData *selected = nil;
     for (BORBalance *balance in currentBalances) {
-        BORCurrencyViewData *data = [BORCurrencyViewData dataWithCurrency:balance.currency.name balance:[NSString stringWithFormat:@"%0.2f", balance.amount] difference:0];
+        BORCurrencyViewData *data = [BORCurrencyViewData dataWithCurrency:balance.currency.name balance:[self balanceString:balance] exchangeAmount:[self fromAmountString] balanceHighlighted:[self fromBalanceHighlighted]];
         if ([balance.currency isEqual:self.selectedFromBalance.currency]) {
             selected = data;
         }
@@ -88,6 +118,32 @@
 
     }
     return [BORCarouselViewData dataWithAllViewData:set selectedViewData:selected];
+}
+
+- (BOOL)fromBalanceHighlighted {
+    return ![self canExchange];
+}
+
+- (NSString *)fromAmountString {
+    NSString *numberAsString = [self formattedAmountString:self.fromAmmount];
+    NSString *prefix = self.fromAmmount > 0 ? @"-" : @"";
+    return [NSString stringWithFormat:@"%@%@", prefix, numberAsString];
+}
+
+- (NSString *)toAmountString {
+    NSString *numberAsString = [self formattedAmountString:self.toAmmount];
+    return [NSString stringWithFormat:@"%@", numberAsString];
+}
+
+- (NSString *)formattedAmountString:(double)amount {
+    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+    [numberFormatter setNumberStyle: NSNumberFormatterDecimalStyle];
+    NSString *numberAsString = [numberFormatter stringFromNumber:@(amount)];
+    return numberAsString;
+}
+
+- (NSString *)balanceString:(BORBalance *)balance {
+    return [NSString stringWithFormat:@"Balance: %0.2f", balance.amount];
 }
 
 - (BORCarouselViewData *)toCurrencyCarouselData {
@@ -99,7 +155,7 @@
     NSMutableOrderedSet *set = [NSMutableOrderedSet orderedSet];
     BORCurrencyViewData *selected = nil;
     for (BORBalance *balance in currentBalances) {
-        BORCurrencyViewData *data = [BORCurrencyViewData dataWithCurrency:balance.currency.name balance:[NSString stringWithFormat:@"%0.2f", balance.amount] difference:0];
+        BORCurrencyViewData *data = [BORCurrencyViewData dataWithCurrency:balance.currency.name balance:[self balanceString:balance] exchangeAmount:[self toAmountString] balanceHighlighted:NO];
         if ([balance.currency isEqual:self.selectedToBalance.currency]) {
             selected = data;
         }
@@ -108,52 +164,84 @@
     return [BORCarouselViewData dataWithAllViewData:set selectedViewData:selected];
 }
 
-- (NSString *)currentExchangeRate {
+- (BORExchangeRate *)currentExchangeRate {
     BORCurrency *fromCurrency = self.selectedFromBalance.currency;
     BORCurrency *toCurrency = self.selectedToBalance.currency;
     BORExchangeRate *rate = [self.exchangeRateProvider exchangeRateFrom:fromCurrency to:toCurrency];
+    return rate;
+}
+
+- (NSString *)currentExchangeRateString {
+    BORExchangeRate *rate = [self currentExchangeRate];
     if (!rate) {
         return @"--";
     }
-    return [NSString stringWithFormat:@"%@ 1 = %@ %0.2f", fromCurrency.symbol, toCurrency.symbol, rate.ratio];
-//    return [BORExchangeRate rateFrom:[self fromCurrencyCarouselData].selectedViewData.currency
-//                                  to:[self toCurrencyCarouselData].selectedViewData.currency ratio:1.0];
-//    return [BORExchangeRate new];
+    BORCurrency *fromCurrency = self.selectedFromBalance.currency;
+    BORCurrency *toCurrency = self.selectedToBalance.currency;
+    return [NSString stringWithFormat:@"%@1 = %@%0.2f", fromCurrency.symbol, toCurrency.symbol, rate.ratio];
+}
+
+- (BOOL)exchangeButtonEnabled {
+    return [self currentExchangeRate] != nil && self.selectedFromBalance.amount - self.fromAmmount >= 0.0 ;
 }
 
 - (void)selectNextFromCurrency {
-    self.selectedFromBalance = [self balanceAfterBalance:self.selectedFromBalance];
+    self.selectedFromBalanceIndex = [self balanceIndexAfterBalance:self.selectedFromBalance];
 }
 
 - (void)selectPrevFromCurrency {
-    self.selectedFromBalance = [self balanceBeforeBalance:self.selectedFromBalance];
+    self.selectedFromBalanceIndex = [self balanceIndexBeforeBalance:self.selectedFromBalance];
 }
 
 - (void)selectNextToCurrency {
-    self.selectedToBalance = [self balanceAfterBalance:self.selectedToBalance];
+    self.selectedToBalanceIndex = [self balanceIndexAfterBalance:self.selectedToBalance];
 }
 
 - (void)selectPrevToCurrency {
-    self.selectedToBalance = [self balanceBeforeBalance:self.selectedToBalance];
+    self.selectedToBalanceIndex = [self balanceIndexBeforeBalance:self.selectedToBalance];
 }
 
-- (BORBalance *)balanceAfterBalance:(BORBalance *)balance {
+- (BORBalance *)selectedFromBalance {
+    return self.balanceProvider.balances[self.selectedFromBalanceIndex];
+}
+
+
+- (BORBalance *)selectedToBalance {
+    return self.balanceProvider.balances[self.selectedToBalanceIndex];
+}
+
+- (NSInteger)balanceIndexBeforeBalance:(BORBalance *)balance {
+    NSInteger index = [self.balanceProvider.balances indexOfObject:balance] - 1;
+    index = index < 0 ? self.balanceProvider.balances.count - 1 : index;
+    return index;
+}
+
+- (NSInteger)balanceIndexAfterBalance:(BORBalance *)balance {
     NSInteger index = [self.balanceProvider.balances indexOfObject:balance] + 1;
     index %= self.balanceProvider.balances.count;
-    return self.balanceProvider.balances[index];
+    return index;
 }
 
 - (BORBalance *)balanceBeforeBalance:(BORBalance *)balance {
-    NSInteger index = [self.balanceProvider.balances indexOfObject:balance] - 1;
-    index = index < 0 ? self.balanceProvider.balances.count - 1 : index;
+    NSInteger index = [self balanceIndexBeforeBalance:balance];
+    return self.balanceProvider.balances[index];
+}
+- (BORBalance *)balanceAfterBalance:(BORBalance *)balance {
+    NSInteger index = [self balanceIndexAfterBalance:balance];
     return self.balanceProvider.balances[index];
 }
 
-
-
+- (BOOL)canExchange {
+    BORExchangeRate *rate = [self currentExchangeRate];
+    return rate && [self.balanceProvider canTransferFrom:rate.fromCurrency to:rate.toCurrency amount:self.fromAmmount rate:rate.ratio];
+}
 
 - (void)exchange {
-    
+    if (![self canExchange]) {
+        return;
+    }
+    BORExchangeRate *rate = [self currentExchangeRate];
+    [self.balanceProvider transferFrom:rate.fromCurrency to:rate.toCurrency amount:self.fromAmmount rate:rate.ratio];
 }
 
 @end

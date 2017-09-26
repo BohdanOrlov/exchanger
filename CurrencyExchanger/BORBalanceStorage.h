@@ -11,14 +11,19 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @class BORBalance;
+@class BORCurrency;
 
-@protocol BORBalanceProviding <NSObject>
+@protocol BORBalanceStoring <NSObject>
 
 @property (strong, nonatomic, readonly) NSOrderedSet<BORBalance *> *balances;
+@property (copy, nonatomic, nullable) void (^balancesDidChange)();
+
+- (BOOL)canTransferFrom:(BORCurrency *)fromCurrency to:(BORCurrency *)toCurrency amount:(double)amount rate:(double)rate;
+- (void)transferFrom:(BORCurrency *)fromCurrency to:(BORCurrency *)toCurrency amount:(double)amount rate:(double)rate;
 
 @end
 
-@interface BORBalanceStorage : NSObject <BORBalanceProviding>
+@interface BORBalanceStorage : NSObject <BORBalanceStoring>
 
 @end
 

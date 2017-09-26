@@ -13,6 +13,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) BORCarouselViewData *data;
 @property (copy, nonatomic, nullable) void (^didSelectPrevView)();
 @property (copy, nonatomic, nullable) void (^didSelectNextView)();
+@property (copy, nonatomic, nullable) void (^didChangeAmount)(double);
+
+- (void)makeActive;
 
 @end
 

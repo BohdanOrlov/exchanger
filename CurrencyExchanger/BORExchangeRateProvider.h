@@ -15,12 +15,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol BORExchangeRateProviding <NSObject>
 
-- (void)exchangeRatesWithCompletion:(void (^)())completion;
+@property (copy, nonatomic) void (^ratesDidChange)();
+- (void)startUpdatingExchangeRates;
 - (BORExchangeRate * _Nullable)exchangeRateFrom:(BORCurrency *)fromCurrency to:(BORCurrency *)toCurrency;
 
 @end
 
 @interface BORExchangeRateProvider : NSObject <BORExchangeRateProviding>
+
++ (instancetype)providerWithUpdateInterval:(NSTimeInterval)updateInterval;
+- (instancetype)init NS_UNAVAILABLE;
 
 @end
 

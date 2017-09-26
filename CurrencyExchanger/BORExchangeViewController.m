@@ -6,6 +6,7 @@
 #import "BORExchangeScreenCoordinator.h"
 
 @interface BORExchangeViewController ()
+@property (strong, nonatomic) id <NSObject> keyboardSizeObserver;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *keyboardSpacingConstraint;
 @property (strong, nonatomic) IBOutlet UIView *exchangeRateContainerView;
 @property (strong, nonatomic) IBOutlet UILabel *exchangeRateLabel;
@@ -26,13 +27,20 @@
     self.topCurrencyViewController.didSelectNextView = ^() {
         [wSelf.actionsHandler selectNextFromCurrency];
     };
+    self.topCurrencyViewController.didChangeAmount = ^(double amount) {
+        [wSelf.actionsHandler setFromCurrencyAmount:amount];
+    };
     self.bottomCurrencyViewController.didSelectPrevView = ^() {
         [wSelf.actionsHandler selectPrevToCurrency];
     };
     self.bottomCurrencyViewController.didSelectNextView = ^() {
         [wSelf.actionsHandler selectNextToCurrency];
     };
+    self.bottomCurrencyViewController.didChangeAmount = ^(double amount) {
+        [wSelf.actionsHandler setToCurrencyAmount:amount];
+    };
     [self updateWithData:self.dataProvider.data];
+    [self.topCurrencyViewController makeActive];
     self.topCurrencyViewController.view.backgroundColor = [UIColor whiteColor];
     self.bottomCurrencyViewController.view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.05];
     self.exchangeRateContainerView.layer.borderColor = self.bottomCurrencyViewController.view.backgroundColor.CGColor;
@@ -41,7 +49,15 @@
     self.exchangeRateLabel.textColor = self.view.tintColor;
     self.exchangeButton.layer.cornerRadius = self.exchangeButton.frame.size.height / 2;
     self.exchangeButton.layer.borderWidth = self.exchangeRateContainerView.layer.borderWidth;
-    self.exchangeButton.layer.borderColor = self.exchangeButton.tintColor.CGColor;
+    [self observeKeyboardSizeChanges];
+}
+
+- (void)observeKeyboardSizeChanges {
+    __weak typeof(self) wSelf = self;
+    self.keyboardSizeObserver = [[NSNotificationCenter defaultCenter] addObserverForName:UIKeyboardWillShowNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull notification) {
+        CGRect keyboardRect = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+        wSelf.keyboardSpacingConstraint.constant = keyboardRect.size.height + 10;
+    }];
 }
 
 - (void)updateWithData:(BORExchangeScreenData *)data {
@@ -51,6 +67,8 @@
     self.topCurrencyViewController.data = data.fromCurrencyData;
     self.bottomCurrencyViewController.data = data.toCurrencyData;
     self.exchangeRateLabel.text = data.exchangeRate;
+    self.exchangeButton.enabled = data.exchangeButtonEnabled;
+    self.exchangeButton.layer.borderColor = data.exchangeButtonEnabled ? self.exchangeButton.tintColor.CGColor : [UIColor lightGrayColor].CGColor;
 }
 
 - (void)setDataProvider:(id<BORExchangeScreenDataProviding>)dataProvider {

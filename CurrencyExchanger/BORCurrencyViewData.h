@@ -15,11 +15,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (copy, nonatomic, readonly) NSString *currency;
 @property (copy, nonatomic, readonly) NSString *balance;
-@property (assign, nonatomic, readonly) NSInteger difference;
+@property (copy, nonatomic, readonly) NSString *exchangeAmount;
+@property (assign, nonatomic, readonly) BOOL balanceHighlighted;
 
-+ (instancetype)dataWithCurrency:(NSString *)currency balance:(NSString *)balance difference:(NSInteger) difference;
++ (instancetype)dataWithCurrency:(NSString *)currency balance:(NSString *)balance exchangeAmount:(NSString *)exchangeAmount balanceHighlighted:(BOOL)balanceHighlighted;
 - (instancetype)init NS_UNAVAILABLE;
-- (instancetype)copyWithDifference:(NSInteger)difference;
 
 @end
 

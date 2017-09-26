@@ -13,15 +13,18 @@
 @interface BORExchangeRateProvider () <NSXMLParserDelegate>
 
 @property (strong, nonatomic, readwrite) NSMutableArray<BORExchangeRate *> *exchangeRates;
+@property (nonatomic) NSTimeInterval updateInterval;
 
 @end
 
 @implementation BORExchangeRateProvider
+@synthesize ratesDidChange = _ratesDidChange;
 
-- (instancetype)init {
-    self = [super init];
-    self.exchangeRates = [NSMutableArray array];
-    return self;
++ (instancetype)providerWithUpdateInterval:(NSTimeInterval)updateInterval {
+    BORExchangeRateProvider *provider = [[self alloc] init];
+    provider.updateInterval = updateInterval;
+    provider.exchangeRates = [NSMutableArray array];
+    return provider;
 }
 
 - (BORExchangeRate *)exchangeRateFrom:(BORCurrency *)fromCurrency to:(BORCurrency *)toCurrency {
@@ -45,20 +48,30 @@
 }
 
 
-- (void)exchangeRatesWithCompletion:(void (^)())completion {
+- (void)startUpdatingExchangeRates {
+    [self updateExchangeRates];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, self.updateInterval * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        [self startUpdatingExchangeRates];
+    });
+
+}
+
+- (void)updateExchangeRates {
+    __weak typeof(self) wSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         @synchronized (self) {
             NSXMLParser *xmlparser = [[NSXMLParser alloc] initWithContentsOfURL:[NSURL URLWithString:@"http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml"]];
-            [self.exchangeRates removeAllObjects];
-            [xmlparser setDelegate:self];
+            [wSelf.exchangeRates removeAllObjects];
+            [xmlparser setDelegate:wSelf];
             [xmlparser parse];
             dispatch_async(dispatch_get_main_queue(), ^{
-                completion();
+                if (wSelf.ratesDidChange) {
+                    self.ratesDidChange();
+                }
             });
         }
     });
 }
-
 
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary<NSString *,NSString *> *)attributeDict {
     if (![elementName isEqualToString:@"Cube"]) {

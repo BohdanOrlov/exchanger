@@ -7,6 +7,7 @@
 //
 
 #import "BORBalance.h"
+#import "BORCurrency.h"
 
 @implementation BORBalance
 

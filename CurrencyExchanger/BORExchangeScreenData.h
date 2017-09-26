@@ -18,8 +18,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic, readonly) BORCarouselViewData *fromCurrencyData;
 @property (strong, nonatomic, readonly) BORCarouselViewData *toCurrencyData;
 @property (strong, nonatomic, readonly) NSString *exchangeRate;
+@property (assign, nonatomic, readonly) BOOL exchangeButtonEnabled;
 
-+ (instancetype)dataWithFromCurrency:(BORCarouselViewData *)fromCurrencyData toCurrencyData:(BORCarouselViewData *)toCurrencyData exchangeRate:(NSString *)exchangeRate;
++ (instancetype)dataWithFromCurrency:(BORCarouselViewData *)fromCurrencyData
+                      toCurrencyData:(BORCarouselViewData *)toCurrencyData
+                        exchangeRate:(NSString *)exchangeRate
+               exchangeButtonEnabled:(BOOL) exchangeButtonEnabled;
 
 - (instancetype)init NS_UNAVAILABLE;
 
