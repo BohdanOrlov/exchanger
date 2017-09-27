@@ -85,7 +85,7 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Note: usage of segues/storyboards is discouraged in big projects due to stringly typed API and deffered initialization.
+    // Note: usage of segues/storyboards is discouraged in big projects due to stringly typed API and deferred initialization.
     if (![segue.destinationViewController isKindOfClass:[BORCarouselViewController class]]) {
         NSAssert(NO, @"Unexpected view controller: %@", segue.destinationViewController);
         return;

@@ -130,7 +130,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="decimalPad" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                                 <connections>
-                                    <action selector="ammountDidChange:" destination="b68-Cs-yYb" eventType="editingChanged" id="bc2-hI-RQ2"/>
+                                    <action selector="amountDidChange:" destination="b68-Cs-yYb" eventType="editingChanged" id="bc2-hI-RQ2"/>
                                     <action selector="didEndEditingAmount:" destination="b68-Cs-yYb" eventType="editingDidEnd" id="MHV-ML-TjI"/>
                                     <action selector="textfieldTextDidChange:" destination="Rxo-I8-OoN" eventType="editingChanged" id="bgq-EU-Lol"/>
                                 </connections>
@@ -160,7 +160,7 @@
                     </view>
                     <connections>
                         <outlet property="activeIndicator" destination="n3w-Db-ssq" id="Zpo-Yu-jAP"/>
-                        <outlet property="ammountTextfield" destination="oU8-rM-2Sc" id="hFj-pl-9be"/>
+                        <outlet property="amountTextField" destination="oU8-rM-2Sc" id="hFj-pl-9be"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eyV-cT-6I8" userLabel="First Responder" sceneMemberID="firstResponder"/>

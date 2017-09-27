@@ -4,10 +4,9 @@
 #import "BORCarouselViewController.h"
 #import "BORCurrencyViewController.h"
 #import "BORCarouselViewData.h"
-#import "BORCurrencyViewData.h"
 
 @interface BORCarouselViewController () <UIPageViewControllerDataSource, UIPageViewControllerDelegate>
-@property (strong, nonatomic) IBOutlet UITextField *ammountTextfield;
+@property (strong, nonatomic) IBOutlet UITextField *amountTextField;
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 @property (strong, nonatomic) IBOutlet UIView *activeIndicator;
 
@@ -20,9 +19,9 @@
 }
 
 
-- (IBAction)ammountDidChange:(id)sender {
+- (IBAction)amountDidChange:(id)sender {
     if (self.didChangeAmount) {
-        self.didChangeAmount(ABS(self.ammountTextfield.text.doubleValue));
+        self.didChangeAmount(ABS(self.amountTextField.text.doubleValue));
     }
 }
 - (IBAction)didEndEditingAmount:(id)sender {
@@ -41,9 +40,9 @@
 
 - (void)setData:(BORCarouselViewData *)data {
     _data = data;
-    self.ammountTextfield.text = data.selectedViewData.exchangeAmount;
+    self.amountTextField.text = data.selectedViewData.exchangeAmount;
     if (self.pageViewController.viewControllers.count) {
-        BORCurrencyViewController *currencyController = (BORCurrencyViewController *)self.pageViewController.viewControllers.firstObject;
+        BORCurrencyViewController *currencyController = self.pageViewController.viewControllers.firstObject;
         currencyController.data = data.selectedViewData;
     } else {
         BORCurrencyViewController *currencyController = [BORCurrencyViewController controller];
@@ -54,7 +53,7 @@
 }
 
 - (void)makeActive {
-    [self.ammountTextfield becomeFirstResponder];
+    [self.amountTextField becomeFirstResponder];
     self.activeIndicator.hidden = NO;
 }
 
@@ -71,7 +70,9 @@
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController {
     BORCurrencyViewController *currentCurrencyController = (BORCurrencyViewController *)viewController;
-    NSUInteger index = [self.data.allViewData indexOfObject:currentCurrencyController.data];
+    NSUInteger index = [self.data.allViewData indexOfObjectPassingTest:^BOOL(BORCurrencyViewData *obj, NSUInteger idx, BOOL *stop) {
+        return [obj.currency isEqualToString:currentCurrencyController.data.currency];
+    }];
     NSUInteger nextIndex = index + 1;
     if (nextIndex >= self.data.allViewData.count) {
         return nil;
@@ -84,14 +85,16 @@
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController {
     BORCurrencyViewController *currentCurrencyController = (BORCurrencyViewController *)viewController;
-    NSInteger index = [self.data.allViewData indexOfObject:currentCurrencyController.data];
+    NSUInteger index = [self.data.allViewData indexOfObjectPassingTest:^BOOL(BORCurrencyViewData *obj, NSUInteger idx, BOOL *stop) {
+        return [obj.currency isEqualToString:currentCurrencyController.data.currency];
+    }];
     NSInteger prevIndex = index - 1;
     if (prevIndex < 0) {
         return nil;
     }
 
     BORCurrencyViewController *currencyController = [BORCurrencyViewController controller];
-    currencyController.data = self.data.allViewData[prevIndex];
+    currencyController.data = self.data.allViewData[(NSUInteger)prevIndex];
     return currencyController;
 }
 
@@ -100,10 +103,14 @@
         return;
     }
 
-    BORCurrencyViewController *currentController = (BORCurrencyViewController *)pageViewController.viewControllers.firstObject;
-    BORCurrencyViewController *previousController = (BORCurrencyViewController *) previousViewControllers.firstObject;
-    NSInteger oldIndex = [self.data.allViewData indexOfObject:previousController.data];
-    NSInteger currentIndex = [self.data.allViewData indexOfObject:currentController.data];
+    BORCurrencyViewController *currentController = pageViewController.viewControllers.firstObject;
+    BORCurrencyViewController *previousController = (BORCurrencyViewController *)previousViewControllers.firstObject;
+    NSUInteger oldIndex = [self.data.allViewData indexOfObjectPassingTest:^BOOL(BORCurrencyViewData *obj, NSUInteger idx, BOOL *stop) {
+        return [obj.currency isEqualToString:previousController.data.currency];
+    }];
+    NSUInteger currentIndex = [self.data.allViewData indexOfObjectPassingTest:^BOOL(BORCurrencyViewData *obj, NSUInteger idx, BOOL *stop) {
+        return [obj.currency isEqualToString:currentController.data.currency];
+    }];
     BOOL forward = currentIndex > oldIndex;
     if (forward) {
         if (self.didSelectNextView) {

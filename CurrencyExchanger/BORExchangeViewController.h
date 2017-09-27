@@ -2,7 +2,10 @@
 //  Copyright © 2017 Bohdan Orlov. All rights reserved.
 
 @import UIKit;
+#import <Foundation/Foundation.h>
 #import "BORExchangeScreenData.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @protocol BORExchangeScreenDataProviding;
 @protocol BORExchangeScreenActionHandling;
@@ -15,4 +18,6 @@
 - (instancetype)init NS_UNAVAILABLE;
 
 @end
+
+NS_ASSUME_NONNULL_END
 

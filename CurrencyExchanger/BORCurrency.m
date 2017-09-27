@@ -23,6 +23,18 @@
     return currency;
 }
 
++ (instancetype)eur {
+    return [self currencyWithName:@"EUR"];
+}
+
++ (instancetype)usd {
+    return [self currencyWithName:@"USD"];
+}
+
++ (instancetype)gbp {
+    return [self currencyWithName:@"GBP"];
+}
+
 - (NSString *)symbol {
     NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:self.name];
     NSString *currencySymbol = [NSString stringWithFormat:@"%@", [locale displayNameForKey:NSLocaleCurrencySymbol value:self.name]];

@@ -1,10 +1,5 @@
-//
-//  BORExchangeScreenCoordinator.h
-//  CurrencyExchanger
-//
 //  Created by Bohdan Orlov on 23/09/2017.
 //  Copyright © 2017 Bohdan Orlov. All rights reserved.
-//
 
 #import <Foundation/Foundation.h>
 #import "BORExchangeScreenData.h"
@@ -14,6 +9,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class BORCurrencyViewData;
 @protocol BORBalanceStoring;
+@protocol BORExchangeRateProviding;
 
 @protocol BORExchangeScreenDataProviding <NSObject>
 
@@ -39,9 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface BORExchangeScreenCoordinator : NSObject <BORExchangeScreenDataProviding, BORExchangeScreenActionHandling>
-
-
-+ (instancetype)coordinatorWithBalanceProvider:(id<BORBalanceStoring>)balanceProvider;
++ (instancetype)coordinatorWithBalanceProvider:(id <BORBalanceStoring>)balanceProvider exchangeRateProvider:(id <BORExchangeRateProviding>)exchangeRateProvider;
 
 
 @end

@@ -1,10 +1,5 @@
-//
-//  BORExchangeScreenCoordinator.m
-//  CurrencyExchanger
-//
 //  Created by Bohdan Orlov on 23/09/2017.
 //  Copyright © 2017 Bohdan Orlov. All rights reserved.
-//
 
 #import "BORExchangeScreenCoordinator.h"
 #import "BORBalanceStorage.h"
@@ -12,7 +7,6 @@
 #import "BORCarouselViewData.h"
 #import "BORCurrencyViewData.h"
 #import "BORBalance.h"
-#import "BORCurrency.h"
 
 @interface BORExchangeScreenCoordinator ()
 
@@ -20,8 +14,8 @@
 @property (strong, nonatomic) id <BORExchangeRateProviding> exchangeRateProvider;
 @property (assign, nonatomic) NSInteger selectedFromBalanceIndex;
 @property (assign, nonatomic) NSInteger selectedToBalanceIndex;
-@property (assign, nonatomic) double fromAmmount;
-@property (assign, nonatomic) double toAmmount;
+@property (assign, nonatomic) double fromAmount;
+@property (assign, nonatomic) double toAmount;
 
 @end
 
@@ -29,11 +23,10 @@
 @synthesize data = _data;
 @synthesize screenDataDidChange = _screenDataDidChange;
 
-
-+ (instancetype)coordinatorWithBalanceProvider:(id <BORBalanceStoring>)balanceProvider {
++ (instancetype)coordinatorWithBalanceProvider:(id <BORBalanceStoring>)balanceProvider exchangeRateProvider:(id <BORExchangeRateProviding>)exchangeRateProvider {
     BORExchangeScreenCoordinator *coordinator = [[self alloc] init];
     coordinator.balanceProvider = balanceProvider;
-    coordinator.exchangeRateProvider = [BORExchangeRateProvider providerWithUpdateInterval:30];
+    coordinator.exchangeRateProvider = exchangeRateProvider;
     return coordinator;
 }
 
@@ -73,14 +66,14 @@
 }
 
 - (void)setFromCurrencyAmount:(double)amount {
-    self.fromAmmount = amount;
-    self.toAmmount = [self currentExchangeRate].ratio * amount;
+    self.fromAmount = amount;
+    self.toAmount = [self currentExchangeRate].ratio * amount;
     [self invalidateData];
 }
 
 - (void)setToCurrencyAmount:(double)amount {
-    self.toAmmount = amount;
-    self.fromAmmount = amount * (1 / [self currentExchangeRate].ratio);
+    self.toAmount = amount;
+    self.fromAmount = amount * (1 / [self currentExchangeRate].ratio);
     [self invalidateData];
 }
 
@@ -125,13 +118,13 @@
 }
 
 - (NSString *)fromAmountString {
-    NSString *numberAsString = [self formattedAmountString:self.fromAmmount];
-    NSString *prefix = self.fromAmmount > 0 ? @"-" : @"";
+    NSString *numberAsString = [self formattedAmountString:self.fromAmount];
+    NSString *prefix = self.fromAmount > 0 ? @"-" : @"";
     return [NSString stringWithFormat:@"%@%@", prefix, numberAsString];
 }
 
 - (NSString *)toAmountString {
-    NSString *numberAsString = [self formattedAmountString:self.toAmmount];
+    NSString *numberAsString = [self formattedAmountString:self.toAmount];
     return [NSString stringWithFormat:@"%@", numberAsString];
 }
 
@@ -182,7 +175,7 @@
 }
 
 - (BOOL)exchangeButtonEnabled {
-    return [self currentExchangeRate] != nil && self.selectedFromBalance.amount - self.fromAmmount >= 0.0 ;
+    return [self currentExchangeRate] != nil && self.selectedFromBalance.amount - self.fromAmount >= 0.0 ;
 }
 
 - (void)selectNextFromCurrency {
@@ -202,17 +195,17 @@
 }
 
 - (BORBalance *)selectedFromBalance {
-    return self.balanceProvider.balances[self.selectedFromBalanceIndex];
+    return self.balanceProvider.balances[(NSUInteger)self.selectedFromBalanceIndex];
 }
 
 
 - (BORBalance *)selectedToBalance {
-    return self.balanceProvider.balances[self.selectedToBalanceIndex];
+    return self.balanceProvider.balances[(NSUInteger)self.selectedToBalanceIndex];
 }
 
 - (NSInteger)balanceIndexBeforeBalance:(BORBalance *)balance {
     NSInteger index = [self.balanceProvider.balances indexOfObject:balance] - 1;
-    index = index < 0 ? self.balanceProvider.balances.count - 1 : index;
+    index = index < 0 ? self.balanceProvider.balances.count - 1 : (NSUInteger)index;
     return index;
 }
 
@@ -224,24 +217,27 @@
 
 - (BORBalance *)balanceBeforeBalance:(BORBalance *)balance {
     NSInteger index = [self balanceIndexBeforeBalance:balance];
-    return self.balanceProvider.balances[index];
+    return self.balanceProvider.balances[(NSUInteger)index];
 }
 - (BORBalance *)balanceAfterBalance:(BORBalance *)balance {
     NSInteger index = [self balanceIndexAfterBalance:balance];
-    return self.balanceProvider.balances[index];
+    return self.balanceProvider.balances[(NSUInteger)index];
 }
 
 - (BOOL)canExchange {
     BORExchangeRate *rate = [self currentExchangeRate];
-    return rate && [self.balanceProvider canTransferFrom:rate.fromCurrency to:rate.toCurrency amount:self.fromAmmount rate:rate.ratio];
+    return rate && [self.balanceProvider canTransferFrom:rate.fromCurrency to:rate.toCurrency amount:self.fromAmount rate:rate.ratio];
 }
 
 - (void)exchange {
     if (![self canExchange]) {
         return;
     }
+    const double transferAmount = self.fromAmount;
     BORExchangeRate *rate = [self currentExchangeRate];
-    [self.balanceProvider transferFrom:rate.fromCurrency to:rate.toCurrency amount:self.fromAmmount rate:rate.ratio];
+    self.fromAmount = 0;
+    self.toAmount = 0;
+    [self.balanceProvider transferFrom:rate.fromCurrency to:rate.toCurrency amount:transferAmount rate:rate.ratio];
 }
 
 @end

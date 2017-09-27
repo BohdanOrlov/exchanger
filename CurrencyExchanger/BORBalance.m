@@ -1,10 +1,5 @@
-//
-//  BORCurrencyRecord.m
-//  CurrencyExchanger
-//
 //  Created by Bohdan Orlov on 24/09/2017.
 //  Copyright © 2017 Bohdan Orlov. All rights reserved.
-//
 
 #import "BORBalance.h"
 #import "BORCurrency.h"

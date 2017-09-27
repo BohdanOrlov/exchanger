@@ -12,7 +12,7 @@
 
 @interface BORBalanceStorage ()
 
-@property (strong, nonatomic) NSMutableOrderedSet<BORBalance *> *mutableBalances;
+@property (strong, nonatomic) NSMutableArray<BORBalance *> *mutableBalances;
 
 @end
 
@@ -20,19 +20,19 @@
 @synthesize balancesDidChange = _balancesDidChange;
 
 - (instancetype)init {
-    BORCurrency *eurCurrency = [BORCurrency currencyWithName:@"EUR"];
-    BORCurrency *usdCurrency = [BORCurrency currencyWithName:@"USD"];
-    BORCurrency *gbpCurrency = [BORCurrency currencyWithName:@"GBP"];
+    BORCurrency *eurCurrency = [BORCurrency eur];
+    BORCurrency *usdCurrency = [BORCurrency usd];
+    BORCurrency *gbpCurrency = [BORCurrency gbp];
     const double initialAmount = 100;
     BORBalance *eurBalance = [BORBalance balanceWithCurrency:eurCurrency amount:initialAmount];
     BORBalance *usdBalance = [BORBalance balanceWithCurrency:usdCurrency amount:initialAmount];
     BORBalance *gbpBalance = [BORBalance balanceWithCurrency:gbpCurrency amount:initialAmount];
     self = [super init];
-    self.mutableBalances = [NSMutableOrderedSet orderedSetWithObjects:eurBalance, usdBalance, gbpBalance, nil];
+    self.mutableBalances = [@[ eurBalance, usdBalance, gbpBalance ] mutableCopy];
     return self;
 }
 
-- (NSOrderedSet<BORBalance *> *)balances {
+- (NSArray<BORBalance *> *)balances {
     return [self.mutableBalances copy];
 }
 
@@ -69,8 +69,10 @@
     NSParameterAssert(toBalance);
     BORBalance *updatedFromBalance = [BORBalance balanceWithCurrency:fromBalance.currency amount:fromBalance.amount - amount];
     BORBalance *updatedToBalance = [BORBalance balanceWithCurrency:toBalance.currency amount:toBalance.amount + amount * rate];
-    [self.mutableBalances replaceObjectAtIndex:[self.mutableBalances indexOfObject:fromBalance] withObject:updatedFromBalance];
-    [self.mutableBalances replaceObjectAtIndex:[self.mutableBalances indexOfObject:toBalance] withObject:updatedToBalance];
+    NSUInteger fromIndex = [self.mutableBalances indexOfObject:fromBalance];
+    NSUInteger toIndex = [self.mutableBalances indexOfObject:toBalance];
+    self.mutableBalances[fromIndex] = updatedFromBalance;
+    self.mutableBalances[toIndex] = updatedToBalance;
     if (self.balancesDidChange) {
         self.balancesDidChange();
     }

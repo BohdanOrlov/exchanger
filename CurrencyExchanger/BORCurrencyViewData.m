@@ -27,16 +27,4 @@
     return data;
 }
 
-- (BOOL)isEqual:(id)object {
-    if (![object isKindOfClass:[BORCurrencyViewData class]]) {
-        return NO;
-    }
-    BORCurrencyViewData *otherObject = object;
-    return [otherObject.currency isEqualToString:self.currency];
-}
-
-- (NSUInteger)hash {
-    return self.currency.hash;
-}
-
 @end

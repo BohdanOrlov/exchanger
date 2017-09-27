@@ -1,15 +1,11 @@
-//
-//  AppDelegate.m
-//  CurrencyExchanger
-//
 //  Created by Bohdan Orlov on 23/09/2017.
 //  Copyright © 2017 Bohdan Orlov. All rights reserved.
-//
 
 #import "BORAppDelegate.h"
 #import "BORExchangeViewController.h"
 #import "BORExchangeScreenCoordinator.h"
 #import "BORBalanceStorage.h"
+#import "BORExchangeRateProvider.h"
 
 @interface BORAppDelegate ()
 
@@ -21,7 +17,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     if ([self.window.rootViewController isKindOfClass:[BORExchangeViewController class]]) {
         BORExchangeViewController *controller = (BORExchangeViewController *) self.window.rootViewController;
-        BORExchangeScreenCoordinator *coordinator = [BORExchangeScreenCoordinator coordinatorWithBalanceProvider:[BORBalanceStorage new]];
+        BORExchangeScreenCoordinator *coordinator = [BORExchangeScreenCoordinator coordinatorWithBalanceProvider:[BORBalanceStorage new]
+                                                                                            exchangeRateProvider:[BORExchangeRateProvider providerWithUpdateInterval:30]];
         controller.dataProvider = coordinator;
         controller.actionsHandler = coordinator;
     } else {
