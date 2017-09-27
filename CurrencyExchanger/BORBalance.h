@@ -14,6 +14,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)balanceWithCurrency:(BORCurrency *)currency amount:(double)amount;
 - (instancetype)init NS_UNAVAILABLE;
+- (BOOL)isEqual:(id)other;
+- (BOOL)isEqualToBalance:(BORBalance *)balance;
+- (NSUInteger)hash;
 
 @end
 

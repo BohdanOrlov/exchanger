@@ -25,10 +25,14 @@
     return controller;
 }
 
+#pragma mark - VLC
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self updateWithData:self.data];
 }
+
+#pragma mark - Data updates
 
 - (void)setData:(BORCurrencyViewData *)data {
     _data = data;

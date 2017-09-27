@@ -7,8 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		886A48FF726D4B6A77F7D2F3 /* BORMockTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 886A48287381385FE5953052 /* BORMockTimer.m */; };
 		886A4AB54FC8278A4E92BFE6 /* BORMockExchangeRateProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 886A4F74447F5D9412128D55 /* BORMockExchangeRateProvider.m */; };
 		886A4BC8390C95D0DD01251E /* BORMockBalanceStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 886A4229217DD1862711A18E /* BORMockBalanceStorage.m */; };
+		886A4C0577006A160466964C /* BORNetworkService.m in Sources */ = {isa = PBXBuildFile; fileRef = 886A45BC9CD9CAFBDA4082B0 /* BORNetworkService.m */; };
+		D20C32011F7BE70C00BBA091 /* BORTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = D20C32001F7BE70C00BBA091 /* BORTimer.m */; };
 		D242034F1F77083F009E255E /* BORCurrencyViewData.m in Sources */ = {isa = PBXBuildFile; fileRef = D242034E1F77083F009E255E /* BORCurrencyViewData.m */; };
 		D24203521F770E36009E255E /* BORCarouselViewData.m in Sources */ = {isa = PBXBuildFile; fileRef = D24203511F770E36009E255E /* BORCarouselViewData.m */; };
 		D24203551F7710C0009E255E /* BORExchangeScreenData.m in Sources */ = {isa = PBXBuildFile; fileRef = D24203541F7710C0009E255E /* BORExchangeScreenData.m */; };
@@ -42,8 +45,14 @@
 /* Begin PBXFileReference section */
 		886A4229217DD1862711A18E /* BORMockBalanceStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BORMockBalanceStorage.m; sourceTree = "<group>"; };
 		886A44C0AE1B2FA59BE87693 /* BORMockBalanceStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BORMockBalanceStorage.h; sourceTree = "<group>"; };
+		886A45BC9CD9CAFBDA4082B0 /* BORNetworkService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BORNetworkService.m; sourceTree = "<group>"; };
+		886A46C33460680714020B90 /* BORMockTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BORMockTimer.h; sourceTree = "<group>"; };
+		886A48287381385FE5953052 /* BORMockTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BORMockTimer.m; sourceTree = "<group>"; };
+		886A4CF1B64B42971AF6B5CC /* BORNetworkService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BORNetworkService.h; sourceTree = "<group>"; };
 		886A4EB64177A0D0771F141A /* BORMockExchangeRateProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BORMockExchangeRateProvider.h; sourceTree = "<group>"; };
 		886A4F74447F5D9412128D55 /* BORMockExchangeRateProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BORMockExchangeRateProvider.m; sourceTree = "<group>"; };
+		D20C31FF1F7BE70C00BBA091 /* BORTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BORTimer.h; sourceTree = "<group>"; };
+		D20C32001F7BE70C00BBA091 /* BORTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BORTimer.m; sourceTree = "<group>"; };
 		D242034D1F77083F009E255E /* BORCurrencyViewData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BORCurrencyViewData.h; sourceTree = "<group>"; };
 		D242034E1F77083F009E255E /* BORCurrencyViewData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BORCurrencyViewData.m; sourceTree = "<group>"; };
 		D24203501F770E36009E255E /* BORCarouselViewData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BORCarouselViewData.h; sourceTree = "<group>"; };
@@ -99,6 +108,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		886A458C6D9EE73E9BA85A96 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				886A4CF1B64B42971AF6B5CC /* BORNetworkService.h */,
+				886A45BC9CD9CAFBDA4082B0 /* BORNetworkService.m */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
+		886A4952A21319F40DF0C596 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				D20C31FF1F7BE70C00BBA091 /* BORTimer.h */,
+				D20C32001F7BE70C00BBA091 /* BORTimer.m */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
 		D24203561F77149C009E255E /* Bussines logic */ = {
 			isa = PBXGroup;
 			children = (
@@ -156,6 +183,8 @@
 				D2481C601F76CF3400F0E0D9 /* LaunchScreen.storyboard */,
 				D2481C631F76CF3400F0E0D9 /* Info.plist */,
 				D2481C521F76CF3400F0E0D9 /* Supporting Files */,
+				886A458C6D9EE73E9BA85A96 /* Services */,
+				886A4952A21319F40DF0C596 /* Utility */,
 			);
 			path = CurrencyExchanger;
 			sourceTree = "<group>";
@@ -177,6 +206,8 @@
 				886A4229217DD1862711A18E /* BORMockBalanceStorage.m */,
 				886A4F74447F5D9412128D55 /* BORMockExchangeRateProvider.m */,
 				886A4EB64177A0D0771F141A /* BORMockExchangeRateProvider.h */,
+				886A46C33460680714020B90 /* BORMockTimer.h */,
+				886A48287381385FE5953052 /* BORMockTimer.m */,
 			);
 			path = CurrencyExchangerTests;
 			sourceTree = "<group>";
@@ -341,6 +372,8 @@
 				D2C216441F780C6F004AA9F0 /* BORExchangeRateProvider.m in Sources */,
 				D24203601F771F89009E255E /* BORExchangeRate.m in Sources */,
 				D24203661F77B9DD009E255E /* BORBalance.m in Sources */,
+				D20C32011F7BE70C00BBA091 /* BORTimer.m in Sources */,
+				886A4C0577006A160466964C /* BORNetworkService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -351,6 +384,7 @@
 				D2BC95A71F7BB16E00595AE2 /* BORExchangeScreenCoordinatorTests.m in Sources */,
 				886A4BC8390C95D0DD01251E /* BORMockBalanceStorage.m in Sources */,
 				886A4AB54FC8278A4E92BFE6 /* BORMockExchangeRateProvider.m in Sources */,
+				886A48FF726D4B6A77F7D2F3 /* BORMockTimer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

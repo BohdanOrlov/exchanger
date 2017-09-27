@@ -7,6 +7,7 @@
 #import "BORCarouselViewData.h"
 #import "BORCurrencyViewData.h"
 #import "BORBalance.h"
+#import "BORTimer.h"
 
 @interface BORExchangeScreenCoordinator ()
 
@@ -17,16 +18,23 @@
 @property (assign, nonatomic) double fromAmount;
 @property (assign, nonatomic) double toAmount;
 
+@property (nonatomic, strong) id <BORTimerProtocol> timer;
+@property (nonatomic) const NSTimeInterval updateRatesTimeInterval;
 @end
 
 @implementation BORExchangeScreenCoordinator
 @synthesize data = _data;
 @synthesize screenDataDidChange = _screenDataDidChange;
 
-+ (instancetype)coordinatorWithBalanceProvider:(id <BORBalanceStoring>)balanceProvider exchangeRateProvider:(id <BORExchangeRateProviding>)exchangeRateProvider {
++ (instancetype)coordinatorWithBalanceProvider:(id <BORBalanceStoring>)balanceProvider
+                          exchangeRateProvider:(id <BORExchangeRateProviding>)exchangeRateProvider
+                                         timer:(id <BORTimerProtocol>)timer
+                       updateRatesTimeInterval:(NSTimeInterval)updateRatesTimeInterval {
     BORExchangeScreenCoordinator *coordinator = [[self alloc] init];
     coordinator.balanceProvider = balanceProvider;
     coordinator.exchangeRateProvider = exchangeRateProvider;
+    coordinator.updateRatesTimeInterval = updateRatesTimeInterval;
+    coordinator.timer = timer;
     return coordinator;
 }
 
@@ -42,11 +50,19 @@
 
 - (void)setExchangeRateProvider:(id<BORExchangeRateProviding>)exchangeRateProvider {
     _exchangeRateProvider = exchangeRateProvider;
-    [exchangeRateProvider startUpdatingExchangeRates];
     __weak typeof(self) wSelf = self;
     exchangeRateProvider.ratesDidChange = ^{
         [wSelf invalidateData];
     };
+    [self startUpdatingRates];
+}
+
+- (void)startUpdatingRates {
+    [self.exchangeRateProvider updateExchangeRates];
+    __weak typeof(self) wSelf = self;
+    [self.timer startTimerWithTimeInterval:self.updateRatesTimeInterval andCallback:^{
+        [wSelf.exchangeRateProvider updateExchangeRates];
+    }                           repetitive:YES];
 }
 
 - (void)setSelectedFromBalanceIndex:(NSInteger)selectedFromBalanceIndex {

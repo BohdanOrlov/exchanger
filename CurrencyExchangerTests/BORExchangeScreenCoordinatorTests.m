@@ -9,10 +9,14 @@
 #import "BORBalance.h"
 #import "BORCurrencyViewData.h"
 #import "BORCarouselViewData.h"
+#import "BORMockTimer.h"
+
+static const int BORExchangeScreenCoordinatorTestsUpdateRatesTimeInterval = 10;
 
 @interface BORExchangeScreenCoordinatorTests : XCTestCase
 @property (strong, nonatomic) BORMockBalanceStorage *mockBalanceStorage;
 @property (strong, nonatomic) BORMockExchangeRateProvider *mockExchangeRateProvider;
+@property (nonatomic, strong) BORMockTimer *mockTimer;
 @property (strong, nonatomic) BORExchangeScreenCoordinator *coordinator;
 @end
 
@@ -22,7 +26,11 @@
     [super setUp];
     self.mockBalanceStorage = [BORMockBalanceStorage new];
     self.mockExchangeRateProvider = [BORMockExchangeRateProvider new];
-    self.coordinator = [BORExchangeScreenCoordinator coordinatorWithBalanceProvider:self.mockBalanceStorage exchangeRateProvider:self.mockExchangeRateProvider];
+    self.mockTimer = [BORMockTimer new];
+    self.coordinator = [BORExchangeScreenCoordinator coordinatorWithBalanceProvider:self.mockBalanceStorage
+                                                               exchangeRateProvider:self.mockExchangeRateProvider
+                                                                              timer:self.mockTimer
+                                                            updateRatesTimeInterval:BORExchangeScreenCoordinatorTestsUpdateRatesTimeInterval];
 }
 
 - (void)tearDown {
@@ -162,12 +170,17 @@
     XCTAssertEqualObjects([BORCurrency eur].name, resultData.fromCurrencyData.selectedViewData.currency);
 }
 
+- (void)tests_WhenCoordinatorCreated_ThenUpdateTimerStarted {
+    XCTAssertEqual(self.mockTimer.invokedTimeInterval, BORExchangeScreenCoordinatorTestsUpdateRatesTimeInterval);
+}
+
+
+#pragma mark - Test utilities
+
 
 - (void)mockExchangeRate:(double)rate {
     self.mockExchangeRateProvider.stubbedExchangeRate = [BORExchangeRate rateFrom:[BORCurrency eur] to:[BORCurrency usd] ratio:rate];
 }
-
-#pragma mark - Test utilities
 
 - (void)mockBalancesWithInitialAmount:(double)initialAmount {
     BORCurrency *eurCurrency = [BORCurrency eur];
@@ -176,6 +189,5 @@
     BORBalance *usdBalance = [BORBalance balanceWithCurrency:usdCurrency amount:initialAmount];
     self.mockBalanceStorage.stubBalances = [@[ eurBalance, usdBalance ] mutableCopy];
 }
-
 
 @end

@@ -7,18 +7,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class BORExchangeRate;
 @class BORCurrency;
+@class BORNetworkService;
 
 @protocol BORExchangeRateProviding <NSObject>
 
 @property (copy, nonatomic) void (^ratesDidChange)();
-- (void)startUpdatingExchangeRates;
+- (void)updateExchangeRates;
 - (BORExchangeRate * _Nullable)exchangeRateFrom:(BORCurrency *)fromCurrency to:(BORCurrency *)toCurrency;
 
 @end
 
 @interface BORExchangeRateProvider : NSObject <BORExchangeRateProviding>
-
-+ (instancetype)providerWithUpdateInterval:(NSTimeInterval)updateInterval;
++ (instancetype)providerWithRatesURL:(NSURL *)ratesURL networkService:(BORNetworkService *)networkService;
 - (instancetype)init NS_UNAVAILABLE;
 
 @end

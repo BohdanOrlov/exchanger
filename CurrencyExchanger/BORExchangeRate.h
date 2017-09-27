@@ -15,6 +15,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)rateFrom:(BORCurrency *)fromCurrency to:(BORCurrency *)toCurrency ratio:(double)ratio;
 - (instancetype)init NS_UNAVAILABLE;
+- (BOOL)isEqual:(id)other;
+- (BOOL)isEqualToRate:(BORExchangeRate *)rate;
+- (NSUInteger)hash;
 
 @end
 

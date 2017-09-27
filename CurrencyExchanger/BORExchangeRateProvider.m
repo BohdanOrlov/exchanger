@@ -4,21 +4,25 @@
 #import "BORExchangeRateProvider.h"
 #import "BORExchangeRate.h"
 #import "BORCurrency.h"
+#import "BORNetworkService.h"
 
 @interface BORExchangeRateProvider () <NSXMLParserDelegate>
 
 @property (strong, nonatomic, readwrite) NSMutableArray<BORExchangeRate *> *exchangeRates;
-@property (nonatomic) NSTimeInterval updateInterval;
 
+
+@property (nonatomic, strong) NSURL *exchangeRatesURL;
+@property (nonatomic, strong) BORNetworkService *networkService;
 @end
 
 @implementation BORExchangeRateProvider
 @synthesize ratesDidChange = _ratesDidChange;
 
-+ (instancetype)providerWithUpdateInterval:(NSTimeInterval)updateInterval {
++ (instancetype)providerWithRatesURL:(NSURL *)ratesURL networkService:(BORNetworkService *)networkService {
     BORExchangeRateProvider *provider = [[self alloc] init];
-    provider.updateInterval = updateInterval;
     provider.exchangeRates = [NSMutableArray array];
+    provider.exchangeRatesURL = ratesURL;
+    provider.networkService = networkService;
     return provider;
 }
 
@@ -43,30 +47,20 @@
 }
 
 
-- (void)startUpdatingExchangeRates {
-    [self updateExchangeRates];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(self.updateInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self startUpdatingExchangeRates];
-    });
-
-}
-
 - (void)updateExchangeRates {
     __weak typeof(self) wSelf = self;
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        @synchronized (self) {
-            // Note: In real project we'd have a network service for this purposes
-            NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithContentsOfURL:[NSURL URLWithString:@"http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml"]];
-            [wSelf.exchangeRates removeAllObjects];
-            [xmlParser setDelegate:wSelf];
-            [xmlParser parse];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (wSelf.ratesDidChange) {
-                    self.ratesDidChange();
-                }
-            });
+    [self.networkService loadDataWithUrl:self.exchangeRatesURL completion:^(NSData *data) {
+        if (!data) {
+            return;
         }
-    });
+        NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithData:data];
+        [wSelf.exchangeRates removeAllObjects];
+        [xmlParser setDelegate:wSelf];
+        [xmlParser parse];
+        if (wSelf.ratesDidChange) {
+            wSelf.ratesDidChange();
+        }
+    }];
 }
 
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary<NSString *,NSString *> *)attributeDict {

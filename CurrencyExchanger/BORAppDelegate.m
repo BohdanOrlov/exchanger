@@ -6,6 +6,8 @@
 #import "BORExchangeScreenCoordinator.h"
 #import "BORBalanceStorage.h"
 #import "BORExchangeRateProvider.h"
+#import "BORNetworkService.h"
+#import "BORTimer.h"
 
 @interface BORAppDelegate ()
 
@@ -16,9 +18,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     if ([self.window.rootViewController isKindOfClass:[BORExchangeViewController class]]) {
-        BORExchangeViewController *controller = (BORExchangeViewController *) self.window.rootViewController;
+        BORExchangeRateProvider *exchangeRateProvider = [BORExchangeRateProvider providerWithRatesURL:[NSURL URLWithString:@"http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml"]
+                                                                                       networkService:[BORNetworkService new]];
         BORExchangeScreenCoordinator *coordinator = [BORExchangeScreenCoordinator coordinatorWithBalanceProvider:[BORBalanceStorage new]
-                                                                                            exchangeRateProvider:[BORExchangeRateProvider providerWithUpdateInterval:30]];
+                                                                                            exchangeRateProvider:exchangeRateProvider
+                                                                                                           timer:[BORTimer timer]
+                                                                                         updateRatesTimeInterval:30.0];
+        BORExchangeViewController *controller = (BORExchangeViewController *) self.window.rootViewController;
         controller.dataProvider = coordinator;
         controller.actionsHandler = coordinator;
     } else {

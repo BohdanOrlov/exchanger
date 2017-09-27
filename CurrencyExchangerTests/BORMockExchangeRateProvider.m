@@ -14,8 +14,9 @@
 - (void)setRatesDidChange:(void (^)())ratesDidChange {
 }
 
-- (void)startUpdatingExchangeRates {
+- (void)updateExchangeRates {
 }
+
 
 - (BORExchangeRate *_Nullable)exchangeRateFrom:(BORCurrency *)fromCurrency to:(BORCurrency *)toCurrency {
     return self.stubbedExchangeRate;

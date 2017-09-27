@@ -7,6 +7,7 @@
 //
 
 #import "BORExchangeRate.h"
+#import "BORCurrency.h"
 
 @interface BORExchangeRate ()
 
@@ -25,6 +26,36 @@
     rate.ratio = ratio;
     return rate;
 }
+
+- (BOOL)isEqual:(id)other {
+    if (other == self)
+        return YES;
+    if (!other || ![[other class] isEqual:[self class]])
+        return NO;
+    return [self isEqualToRate:other];
+}
+
+- (BOOL)isEqualToRate:(BORExchangeRate *)rate {
+    if (self == rate)
+        return YES;
+    if (rate == nil)
+        return NO;
+    if (self.fromCurrency != rate.fromCurrency && ![self.fromCurrency isEqual:rate.fromCurrency])
+        return NO;
+    if (self.toCurrency != rate.toCurrency && ![self.toCurrency isEqual:rate.toCurrency])
+        return NO;
+    if (self.ratio != rate.ratio)
+        return NO;
+    return YES;
+}
+
+- (NSUInteger)hash {
+    NSUInteger hash = [self.fromCurrency hash];
+    hash = hash * 31u + [self.toCurrency hash];
+    hash = hash * 31u + [[NSNumber numberWithDouble:self.ratio] hash];
+    return hash;
+}
+
 
 @end
 

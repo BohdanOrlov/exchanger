@@ -10,6 +10,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class BORCurrencyViewData;
 @protocol BORBalanceStoring;
 @protocol BORExchangeRateProviding;
+@protocol BORTimerProtocol;
 
 @protocol BORExchangeScreenDataProviding <NSObject>
 
@@ -35,7 +36,10 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface BORExchangeScreenCoordinator : NSObject <BORExchangeScreenDataProviding, BORExchangeScreenActionHandling>
-+ (instancetype)coordinatorWithBalanceProvider:(id <BORBalanceStoring>)balanceProvider exchangeRateProvider:(id <BORExchangeRateProviding>)exchangeRateProvider;
++ (instancetype)coordinatorWithBalanceProvider:(id <BORBalanceStoring>)balanceProvider
+                          exchangeRateProvider:(id <BORExchangeRateProviding>)exchangeRateProvider
+                                         timer:(id <BORTimerProtocol>)timer
+                       updateRatesTimeInterval:(NSTimeInterval)updateRatesTimeInterval;
 
 
 @end
